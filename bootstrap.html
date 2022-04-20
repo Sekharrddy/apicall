@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+
+
+
+    <style>
+        .trow{
+            background-color:#F7F4ED ;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0 15px;
+            width: 100%;
+        }
+
+        th {
+            border-style: solid none;
+            color:#87754A;
+            border: none;
+            background-color:#F7F4ED ;
+           
+        }
+
+        th,
+        td {
+            width: 150px;
+            text-align: left;   
+            padding: 1px;
+            font-size: .875rem;
+            line-height: 30px;
+        }
+
+
+        td:first-child {
+            border-left-style: solid;
+            border-top-left-radius: 11px;
+            border-bottom-left-radius: 11px;
+        }
+
+        td:last-child {
+            border-right-style: solid;
+            border-bottom-right-radius: 11px;
+            border-top-right-radius: 11px;
+        }
+
+        tr {
+            border-radius: 10px;
+            background-color: white;
+        }
+        td {
+            border-style: solid none;
+        }
+
+
+        .input {
+            width: 63%;
+            height: 40px;
+            background-color: #ECE5D4;
+            border-radius: 6px;
+            border: none;
+
+        }
+
+        .input1 {
+            background-color: #ECE5D4;
+            border-radius: 6px;
+            width: 17%;
+            height: 40px;
+            border: none;
+
+        }
+
+        ::placeholder {
+            color: #837042;
+            padding: 25px;
+        }
+
+        .icon {
+            position: relative;
+            right: 33px;
+            color: #A69873;
+        }
+
+        h6,
+        h3 {
+            display: inline;
+        }
+        h6 {
+            background-color: #ECE5D4;
+            border-radius: 5px;
+            padding: 1px 4px 3px 4px;
+            color: #7F6A3C;
+        }
+        .text {
+            color: #7B6E51;
+        }
+
+        ul>li {
+            font-weight: 500;
+        }
+
+        .container-fluid {
+            background-color: #F7F4ED;
+            padding: 7px 14px 15px 14px;
+        }
+
+        .first {
+            padding: 5px 10px 3px 8px;
+            font-size: 14px;
+            color: #FB8B7B;
+            background-color: #FBE3DD;
+            border-radius: 4px;
+        }
+
+        .menu {
+            justify-content: space-between;
+            margin-right: 35px;
+        }
+
+        .ul {
+            display: flex;
+            list-style-type: none;
+
+        }
+
+        .ul1 {
+            display: flex;
+            list-style-type: none;
+            margin-left: 220px;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div>
+            <span class="row">
+                <ul class="ul col-md-8 mr-5">
+                    <li class="menu"><i class="fas fa-location-arrow" style="color: green;"></i></li>
+                    <li class="text menu">Foo corp</li>
+                    <li class="menu">Contacts</li>
+                    <li class="menu">Tasks</li>
+
+                </ul>
+                <ul class="ul1 col-md-2 ">
+                    <li class="li1 first">New Contact</li>
+                    <li class="li1"><i class="fab fa-500px"></i></li>
+                    <li class="li1"><i class="fas fa-arrow-right"></i></li>
+                </ul>
+
+            </span>
+        </div>
+
+        <p>
+        <h3>Contacts </h3>
+        <h6> 12</h6>
+        </p>
+        <div class="mb-4 pt-4" >
+            <input class='input' type="text" placeholder="Search for contacts" id="atcelement" onkeyup="changeInput(this.value)"/><i class="fas fa-search icon"></i>
+            <span id="result"></span>
+            <input class='input1' type="text" placeholder="Filter Status"> <i class="fas fa-caret-down icon"></i>
+            <input class='input1' type="text" placeholder="Archived" />
+
+        </div>
+
+        <table class="table table-borderless">
+            <thead>
+                <tr class="text-left trow">
+                    <th class=" col-md-1">Username <i class="fas fa-caret-up"></i></th>
+                    <th class=" col-md-1">Email <i class="fas fa-caret-up"></i></th>
+                    <th class=" col-md-4">Address<i class="fas fa-caret-up"></i></th>
+                    <th class=" col-md-2">Numbers <i class="fas fa-caret-up"></i></th>
+                    <th class=" col-md-2">Company <i class="fas fa-caret-up"></i></th>
+                    <th class=" col-md-1 ">Website<i class="fas fa-caret-up"></i></th>
+                    <th class=" col-md-1">Id<i class="fas fa-caret-up"></i></th>
+                </tr>
+            </thead>
+            <tbody id="data" class="cls my-2">
+
+            </tbody>
+        </table>
+
+    </div>
+    <script>
+       
+        var vaal;
+        var itemDatA;
+                fetch("https://jsonplaceholder.typicode.com/users")
+                    .then(res => {
+                        res.json()
+                            .then(data => {
+                                console.log(data);
+                                var value = "";         
+                                data.map((itemData) => {
+                                   var itemDatA=itemData;
+                                    value += "<tr>";
+                                    value += "<td>" + itemData.username + "</td>"       
+                                    value += "<td>" + itemData.email + "</td>";
+                                    value += "<td>" + itemData.address.city + ', ' + itemData.address.street + ', ' + itemData.address.zipcode + "</td>";
+                                    value += "<td>" + itemData.phone + "</td>";
+                                    value += "<td>" + itemData.company.name + "</td>";
+                                    value += "<td>" + "<a href='https://www.google.com/' target='_blank'>" + itemData.website + "</a>" + "</td>";
+                                    // vaal=  value += "<td>" + itemData.website + "</td>";
+                                    // value +="<td>" +window.open("https://www.google.com/")+itemData.website+"</td>";
+                                    value += "<td>" + itemData.id + "</td>";
+                                    value += "</tr>";
+                                });    
+                                document.querySelector('#data').innerHTML = value;   
+                            }
+                            )
+                            .catch((error) => {
+                                console.log('api is not getting')
+                                
+                            })
+                            
+                    }
+                    )
+                var table = document.getElementsByTagName("table")[0];
+                var tbody = table.getElementsByTagName("tbody")[0];
+                tbody.onclick = function (e) {
+                    e = e || window.event;
+                    var data = [];
+                    var target = e.srcElement || e.target;
+                    while (target && target.nodeName !== "TR") {
+                        target = target.parentNode;
+                    }
+                    if (target) {
+                        var cells = target.getElementsByTagName("");
+                        for (var i = 0; i < cells.length; i++) {
+                            data.push(cells[i].innerHTML);
+                        }
+                       
+                    }
+                    alert(data);
+                };
+    //             var lister=target.getElementsByTagName('a').addEventListener('click', function() {
+	// window.open('https://www.google.com/', '_blank');
+    //             })
+                
+            
+                var people = itemDatA.vaal;
+            
+            function matchPeople(input) {
+                var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
+                return people.filter(function(person) {
+                if (person.match(reg)) {
+                    return person;
+                }
+                });
+            }
+            function changeInput(val) {
+                var autoCompleteResult = matchPeople(val);
+                document.getElementById("result").innerHTML = autoCompleteResult;
+            }
+
+
+
+
+
+    </script>
+</body>
+
+</html>
